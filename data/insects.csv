@@ -1,0 +1,15 @@
+id,name,image,time,hight,monitoring,catch
+1,Стебловий кукурудзяний метелик (Ostrinia nubilalis Hbn.),https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Ostrinia_nubilalis01.jpg/275px-Ostrinia_nubilalis01.jpg,до початку викидання волоті на кукурудзі,"0,8-1,2",1 пастка на 1 га,30 пасток на 1 га
+2,Лучний метелик (Margaritia sticticalis L.),https://www.biochemtech.com.ua/wp-content/uploads/2019/01/444-8.jpg,ІІІ дек. квітня,"0,6-0,8","1 пастка на 1 га, при наявності шкідника - 1 пастка на 0,5 га",30 пасток на 1 га
+3,Озима совка (Agrotis segetum),https://lh6.googleusercontent.com/proxy/T_2VcHAHECv0YydsxhyHzht1xHM_NxwSzniuPSpphYGt8Gtgf0f9F5eHhCpYLVQpMqfxKeZbKhXXxdFwk3PUYxKBdzIV1zTk-ucHKtOSrBxDRmO42gzjujpHqri8-6IzA4E,травень - серпень,"0,7",1 пастка на 3 га,30 пасток на 1 га
+4,Оклична совка (Agrotis exclamationis L.),,травень –  серпень,"0,7",1 пастка на 3 га,30 пасток на 1 га
+5,Совка-іпсилон (Agrotis ipsilon Hfn.),,травень – серпень,"0,8",1 пастка на 3 га,30 пасток на 1 га
+6,Капустяна совка (Mamestra brassicae L.),,ІІІ дек. квітня  липень –вересень,1,1 пастка на 1 га,30 пасток на 1 га
+7,Совка-гамма (Autographa gamma L.),,ІІІ дек. квітня  липень –вересень,"0,8",1 пастка на 1 га,30 пасток на 1 га
+8,Бавовникова совка (Heliothis armigera Hb.),https://agrostory.com/upload/medialibrary/79a/79abd390de5f4a2b9c8769fec9dfb2fd.jpg,ІІІ дек. квітня  липень –вересень,"0,7",1 пастка на 1 га,30 пасток на 1 га
+9,Помідорна совка (карадрина) (Spodoptera exigua Hb.),,ІІІ дек. квітня  липень –вересень,"0,7","4 пастки на 1 га – відкритий ґрунт;
+ 1 пастка – 1000 м2 – у теплицях","30 пасток на 1 га – відкритий ґрунт;
+ 4 шт. на 1000 м2 теплиці"
+10,Совка С-чорне (Amathes C-nigrum L.),,ІІІ дек. квітня  липень –вересень,"0,7-0,8",1 пастка на 1 га,10-30 пасток на 1 га
+11,Конюшинова совка (Scotogramma trifoli Rott.),,ІІІ дек. квітня  липень –вересень,"0,7-0,8","1 пастка на 1 га;
+ 1 пастка на 0,5 га для розплідника",10-30 пасток на 1 га
