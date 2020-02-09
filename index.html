@@ -3,16 +3,39 @@
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <!-- <link rel="stylesheet" href="style.css"> -->
-    
+
     <title>INSECTS</title>
   </head>
   <body>
-    
+
+    <nav class="navbar navbar-light bg-faded">
+      <a class="navbar-brand" href="#">Incectodor</a>
+      <!-- <ul class="nav navbar-nav"> 
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Pricing</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+      </ul> -->
+      <form class="form-inline pull-xs-right">
+        <input class="form-control" id=search type="text" placeholder="Пошук">
+        <!-- <button class="btn btn-outline-success" type="submit">Кошик</button> -->
+      </form>
+    </nav>
+
+
     <!-- <input type="button" value="Кликните, чтобы увидеть форму" id="show-button"> -->
   
     <!-- <button class="btn btn-primary" id='calcQty'>Рассчитать</button>   -->
@@ -27,16 +50,62 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="text-center">INSECTS</h1>
+                <h2 class="text-center">Лускокрилі</h2>
             </div>
+           
+
+          <!-- <form action="php/telegram.php" method="POST"> -->
+            <!-- <legend>Ваше замовлення</legend> -->
+            
             <div class="col-lg-12">
-              <h5 class="text-center">Cart</h5>
-              <ul class="cart"></ul>
+              <h5 class="text-center">Кошик</h5>
+              <ul name="cart" class="cart"></ul>
           </div>
-          <a href=order.html>Заказать</a>
+
+      			<!-- <div class="form-group">
+      				<label for="">Ім'я</label>
+      				<input type="text" class="form-control" id="" name="user_name" placeholder="Наприклад, Іван">
+      			</div>
+      		 -->
+      			<div class="form-group">
+      				<label for="">Телефон</label>
+      				<input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="+38 (050) 00 00 000">
+      			</div>
+      		
+      			<!-- <div class="form-group">
+      				<label for="">email</label>
+      				<input type="text" class="form-control" id="" name="user_email" placeholder="mail@gmail.com">
+      			</div> -->
+      		
+      			<button type="submit" class="btn-order">Замовити</button>
+      		</form>
         </div>
     </div>
+
+    <div class="modal fade">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h4 class="modal-title">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            <p>One fine body&hellip;</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div><!-- /.модальное окно-Содержание -->  
+      </div><!-- /.модальное окно-диалог -->  
+    </div><!-- /.модальное окно -->  
+
+
     <div id="root" class="d-flex flex-wrap"></div>
+
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="app/insects.js"></script>

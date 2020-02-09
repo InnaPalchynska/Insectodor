@@ -11,64 +11,133 @@ function loadCart(){
 
 loadCart();
 
+
 function insectsLoad(){
     fetch('https://spreadsheets.google.com/feeds/list/1D6SsLsIU3vL_Fhb4EA43OKTbJ30Se06h9t9pN4DdzhM/od6/public/values?alt=json').then(resp=>resp.json()).then(data=>{
         data = data['feed']['entry'];
         goods = arrayHelper(data);
-        data.forEach(insect=>{
-              root.innerHTML += `
-              <div class="card" style="width: 18rem;">
-          <img src="${insect.gsx$image.$t}" class="card-img-top" alt="insect" width=300 height=200>
-          <div class="card-body">
-              <h5 class="card-title">${insect.gsx$name.$t} </h5>
-              <p class="card-text">${insect.gsx$time.$t}</p>
-              <p class="card-text">Ловушку выставлять на высоте ${insect.gsx$hight.$t} м над землей</p>
-              <button class='btn' name='calcQty' data-id=${insect.gsx$id.$t}>Рассчитать</button>
-          </div>
-          </div>`;  
-          });  
+        // let searchData = data;
+        renderCards(data);
+        // document.addEventListener('input', function(ev) {
+        //     if(ev.target.classList.contains('form-control')){
+        //         let name = document.getElementById("search").value;
+        //         name = name.toLowerCase();
+        //         console.log(name);
+        //         searchData = data.filter(el=>el.gsx$name.$t.toLowerCase().includes(name));
+        //         renderCards(searchData);
+        //         console.log(searchData);
+        //     }else{
+        //         renderCards(data);
+        //     }
+        // })
+        // data.forEach(insect=>{
+        //       root.innerHTML += `
+        //       <div class="card" style="width: 18rem;">
+        //   <img src="${insect.gsx$image.$t}" class="card-img-top" alt="insect" width=300 height=200>
+        //   <div class="card-body">
+        //       <h5 class="card-title">${insect.gsx$name.$t} </h5>
+        //       <p class="card-text"><b>Час ставити пастку: </b>${insect.gsx$time.$t}</p>
+        //       <p class="card-text"><b>Пастку виставляти на висоті </b>${insect.gsx$hight.$t} м над землею</p>
+        //       <p class="card-text"><b>Ціна за комплект: </b>${insect.gsx$cost.$t} грн.</p>
+        //       <button class='btn' name='calcQty' data-id=${insect.gsx$id.$t}>Рассчитать</button>
+        //   </div>
+        //   </div>`;  
+        //   });  
+       
         
-        console.log(data);
-        console.log(goods);
-        showCard();
+        
+        // console.log(goods);
+        showCart();
+        console.log(cart);
         
     });
-}
+    }
 
 insectsLoad();
-// showCard();
+// showCart();
 // loadCart();
+console.log(goods);
+
+
+function renderCards (data){
+    data.forEach(insect=>{
+        root.innerHTML += `
+        <div class="card" style="width: 18rem;">
+    <img src="${insect.gsx$image.$t}" class="card-img-top" alt="insect" width=300 height=200>
+    <div class="card-body">
+        <h5 class="card-title">${insect.gsx$name.$t} </h5>
+        <p class="card-text"><b>Час ставити пастку: </b>${insect.gsx$time.$t}</p>
+        <p class="card-text"><b>Пастку виставляти на висоті </b>${insect.gsx$hight.$t} м над землею</p>
+        <p class="card-text"><b>Ціна за комплект: </b>${insect.gsx$cost.$t} грн.</p>
+        <button class='btn' name='calcQty' data-id=${insect.gsx$id.$t}>Рассчитать</button>
+    </div>
+    </div>`;  
+    });
+} 
+
 
 
 document.addEventListener('click', function(ev){
     //  console.log(ev.target);
      if (ev.target.classList.contains('btn')) {
          console.log(ev.target.dataset.id);
-         addToCart (ev.target.dataset.id);        
+        //  addToCart (ev.target.dataset.id);        
          console.log(ev.target.attributes.name.nodeValue);             
         swal("Введите площадь поля в гектарах:", {
             content: "input",
           })
           .then((value) => {
             let traps = Math.floor(value/goods[ev.target.dataset.id]['trapping']);
+            (traps <= 0) ? traps = 1 : traps = traps;
             // console.log(traps);
             swal(`Вам нужно: ${traps} ловушек`);
+            addToCart (ev.target.dataset.id, traps);
+            // if (traps >0){
+            //     addToCart (ev.target.dataset.id, traps);
+            // }else{
+            //     alert('Malo');
+            // }
             });                
         }else if(ev.target.classList.contains('deleteGoods')){
             delete cart[ev.target.attributes.data.nodeValue]; 
             // console.log(ev.target.attributes.data.nodeValue);
-            showCard();
+            showCart();
             localStorage.setItem('cart', JSON.stringify(cart));
         }else if(ev.target.classList.contains('plusGoods')){
             cart[ev.target.attributes.data.nodeValue]++; 
-            showCard();
+            showCart();
             localStorage.setItem('cart', JSON.stringify(cart));
         }else if(ev.target.classList.contains('minusGoods')){
             (cart[ev.target.attributes.data.nodeValue] >= 2) ? cart[ev.target.attributes.data.nodeValue]-- : delete cart[ev.target.attributes.data.nodeValue];
-            showCard();
+            showCart();
             localStorage.setItem('cart', JSON.stringify(cart));
-        }        
-     
+        }else if(ev.target.classList.contains('btn-order')){
+            let arrForSend = {};
+    for (let key in cart ){
+        let temp = {};
+        temp.name = goods[key]['name'];
+        temp.cost = goods[key]['cost'];
+        arrForSend[key] = temp;}
+            let senData = {
+                phone: document.getElementById('user_phone').value,
+                cart: arrForSend,                
+            };
+            console.log(senData);
+
+           fetch("php/telegram.php",
+           {
+               method: "POST",
+               body: JSON.stringify(senData)
+           })
+           .then(function (res) {
+               console.log(res);
+               if (res) {
+                   alert('Succses');
+               }else{
+                   alert('Error');
+               }
+           })
+        }
 
     //  if (ev.target.attributes.name.nodeValue == 'calcQty') {
     //      console.log('jjjjj');
@@ -78,15 +147,77 @@ document.addEventListener('click', function(ev){
     //  }
 }) 
 
-function addToCart(elem){
-    if (cart[elem] !== undefined){
-        cart[elem]++;
+
+// document.addEventListener('input', function(ev) {
+
+//     if(ev.target.classList.contains('form-control')){
+//         insectsLoad();
+//         let name = document.getElementById("search").value;
+//         // search(name);
+//         name = name.toLowerCase();
+//         console.log(name);
+        // insectsLoad(name);
+        // data.filter(name=>name.insect.gsx$name.$t.toLowerCase().includes(name));  
+        // console.log(data);
+       
+        // data.forEach(insect=>{
+        //     root.innerHTML += `
+        //     <div class="card" style="width: 18rem;">
+        // <img src="${insect.gsx$image.$t}" class="card-img-top" alt="insect" width=300 height=200>
+        // <div class="card-body">
+        //     <h5 class="card-title">${insect.gsx$name.$t} </h5>
+        //     <p class="card-text"><b>Час ставити пастку: </b>${insect.gsx$time.$t}</p>
+        //     <p class="card-text"><b>Пастку виставляти на висоті </b>${insect.gsx$hight.$t} м над землею</p>
+        //     <p class="card-text"><b>Ціна за комплект: </b>${insect.gsx$cost.$t} грн.</p>
+        //     <button class='btn' name='calcQty' data-id=${insect.gsx$id.$t}>Рассчитать</button>
+        // </div>
+        // </div>`;  
+//         // });
+//     }
+
+// }) 
+
+// function search(){
+//     document.addEventListener('input', function(ev) {
+
+//         if(ev.target.classList.contains('form-control')){
+//             let name = document.getElementById("search").value;
+           
+//             name = name.toLowerCase();
+          
+//             return name;
+            
+//         }
+    
+//     }) 
+     
+// }
+
+// function arrayForSend(){
+//     let arrForSend = {};
+//     for (let key in cart ){
+//         let temp = {};
+//         temp.name = goods[key]['name'];
+//         temp.cost = goods[key]['cost'];
+//         arrForSend[key] = temp;
+//     }
+//     // console.log(arrForSend);
+//     return arrForSend;
+// }
+
+
+
+            
+
+function addToCart(elem, traps){
+    if (cart[elem] !== undefined) {
+       cart[elem] += traps;
         
     }else{
-        cart[elem]=1;
+        cart[elem] = traps;
     }
-    console.log(cart);
-    showCard();
+    // console.log(cart);
+    showCart();
     localStorage.setItem('cart', JSON.stringify(cart));
  }
 
@@ -107,24 +238,31 @@ function addToCart(elem){
      return out;
  }
 
- function showCard(){
+ function showCart(){
     let ul = document.querySelector('.cart');
     ul.innerHTML = ' ';
-    let sum = '';
+    let sum = 0;
+    let cost = 0;
     for (let key in cart) {
         let li = '<li>';
         li += goods[key]['name'] + ' ';
         li += ` <button class='minusGoods' name='minusGoods' data=${key}>-</button> `;
         li += cart[key] + ' шт. ';
         li += ` <button class='plusGoods' name='plusGoods' data=${key}>+</button> `;
-        li += goods[key]['cost']*cart[key] +' грн.';
+        cost = parseFloat(goods[key]['cost']) * parseFloat(cart[key]);
+        li += cost + ' грн.';
         li += ` <button class='deleteGoods' name='deleteGoods' data=${key}>x</button>`;
         li += '</li>';
-        sum += goods[key]['cost']*cart[key] +' грн.';
+        sum += cost;
         ul.innerHTML += li;            
         }
-        (sum >= 0) ? ul.innerHTML += "Ваша корзина пуста" : ul.innerHTML += "Итого: " + sum;          
+        // ul.innerHTML += "Итого: " + sum + ' грн.';
+        (sum <= 0) ? ul.innerHTML += "Ваш кошик пустий, додайте щось..." : ul.innerHTML += "Итого: " + sum + ' грн.';          
     }
+
+
+
+
 
  
 
